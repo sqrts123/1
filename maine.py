@@ -120,6 +120,7 @@ class Game:
   def pause_game(self, main_text, sub_text):
     global running
     main_text = self.font.render(main_text, True, WHITE)
+    get_rect()
     
       
       
