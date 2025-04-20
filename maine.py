@@ -121,8 +121,53 @@ class Game:
     global running
     main_text = self.font.render(main_text, True, WHITE)
     get_rect()
-    
+    main_rect.center = WINDOW_WIDTH // WIDTH_HEIGHT
+    sub_text = self.font.render(sub_text, True, WHITE)
+    sub_rect = WINDOW_WIDTH // (WIDTH_HEIGHT + 64)
+    dislpay_surface.fill(BLACK)
+    display_surface.blit(main_text, main_rect)
+    display_surface.blit(sub_text, sub_rect)
+    pygame.display.update()
+
+  is_paused = True
+  while is_paused:
+    forevent in pygame.event.get():
+    if event.type = pygame.KEYDOWN:
+    if event.key = pygame.K_RETURN
+      is_paused = False
+
+  if event.type =  pygame.QUIT:
+    is_paused = False
+    running  = False
+
+  def reset_game(self):
+    self.pause_game("Final Score: " + str(self.score), "Press 'Enter' to play again")
+    score = 0
+    round_number = 1
+    player.lives = 5
+    alien_group.empty()
+    alien_bullet_group.empty()
+    player_bullet_group.empty()
+    self.start_new_round()
+
+class Player(pygame.sprite.Sprite):
+  def __init__(self, bullet_group):
+    super().__init__()
+    self.image = "player_ship.png"
+    self.rect = player_ship.rect
+    self.rect.centerx = WINDOW_WIDTH // 2
+    self.rect.bottom =  WINDOW_HEIGHT
+    self.lives = 5
+    self.velocity = 8
+    pass
+    pass
+
+  def update(self):
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_LEFT] and self.rect.left > 0:
+      self.rect.x = self.rect.x - self.velocity
       
+    
       
 
   
