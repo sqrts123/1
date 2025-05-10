@@ -166,7 +166,53 @@ class Player(pygame.sprite.Sprite):
     keys = pygame.key.get_pressed()
     if keys[pygame.K_LEFT] and self.rect.left > 0:
       self.rect.x = self.rect.x - self.velocity
+    if keys[pygame.K_RIGHT] and self.rect.right < 0:
+      self.rect.x = self.rect.x + self.velocity
       
+  def fire(self):
+    if len(self.bullet_group) < 2:
+      pygame.mixer.music.load("self.shoot_sound.wav")
+      PlayerBullet(self.rect.centerx, self.rect.top, self.bullet_group)
+
+  def reset(self):
+    pass
+
+class Alien(pygame.sprite.Sprite):
+  def  __init__(self, x, y, velocity, bullet_group):
+    super().__init__()
+    self.image = "alien.png"
+    self.rect = alien.rect
+    self.rect.topleft = (x, y)
+    self.starting_x = x
+    self.starting_y = y
+    self.direction = 1
+    self.velocity = velocity
+    self.bullet_group = bullet_group
+    self.shoot_sound = pygame.mixer.Sound("alien_fire.wav")
+
+  def update(self):
+    x += 3
+    self.rect.x = direction * velocity
+
+    if random.randint(0, 1000) > 999 and len(self.bullet_group) < 3:
+      self.shoot_sound.play()
+      self.fire()
+
+  def fire(self):
+    AlienBullet(self.rect.centerx, self.rect.bottom, self.bullet_group)
+
+  def reset(self):
+    self.rect.topleft(self.starting_x, self.starting_y)
+    self.direction = 1
+
+class PlayerBullet(pygame.sprite.Sprite):
+  def __init__(self, x, y, bullet_group):
+    super().__init__()
+    self.image = pygame.image.load("./assets/images/green_laser.png")
+    self.rect = self.image.get_rect()
+    
+    
+    
     
       
 
