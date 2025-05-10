@@ -210,7 +210,68 @@ class PlayerBullet(pygame.sprite.Sprite):
     super().__init__()
     self.image = pygame.image.load("./assets/images/green_laser.png")
     self.rect = self.image.get_rect()
-    
+    x = self.rect.centerx
+    y = self.rect.centery
+    self.velocity = 10
+    bullet_group(self)
+
+  def update(self):
+    self.rect.y = self.rect.y - self.velocity
+    if self.rect.bottom < 0:
+      self.kill()
+
+class AlienBullet(pygame.sprite.Sprite):
+  def __init__(self, x, y, bullet_group):
+    super().__init__()
+    self.image = pygame.image.load("./assets/images/red_laser.png") 
+    self.rect = self.image.get_rect()
+    x = self.rect.centerx
+    y = self.rect.centery
+    self.velocity = 10
+    bullet_group(self)
+
+  def update(self): 
+    self.rect.y += self.velocity
+
+    if self.rect.top > WINDOW_HEIGHT:
+      self.kill()
+
+my_player_bullet_group = pygame.sprite.Group()
+my_alien_bullet_group = pygame.sprite.Group()
+
+my_player_group = pygame.sprite.Group()
+my_player = Player(my_player_bullet_group)
+my_player_group.add(my_player)
+
+my_game = Game(my_player, my_alien_group, my_player_bullet_group, my_alien_bullet_group)
+my_game.start_new_round()
+
+running = True
+while running:
+  for event in pygame.event.get():
+    if event.type == pygame.QUIT:
+      running = False
+
+    if event.type == pygame.KEYDOWN:
+      if event.key == pygame.K_SPACE:
+        my_player.fire()
+
+  display_surface.fill((0, 0, 0))
+  my_player_group.update()
+  my_player_group.draw(display_surface)
+  my_alien_group.update()
+  my_alien_group.draw(display_surface)
+  my_player_bullet_group.update()
+  my_player_bullet_group.draw(display_surface)
+  my_alien_bullet_group.update()
+  my_alien_bullet_group.draw(display_surface)
+  my_game.update()
+  my_game.draw()
+  pygame.display.update()
+  clock.tick(FPS)
+
+pygame.quit()
+
     
     
     
